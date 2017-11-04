@@ -1,0 +1,7 @@
+[package]
+name = "clang-rs-test"
+version = "0.1.0"
+authors = ["xujing <jink_xu@foxmail.com>"]
+
+[dependencies]
+clang = "0.17.0"
