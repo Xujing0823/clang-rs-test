@@ -1,7 +1,11 @@
 extern crate clang;
 
+mod clang_rs_ext;
+
 use clang::*;
 use std::env;
+use clang_rs_ext::*;
+
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -39,6 +43,20 @@ fn main() {
     }).collect::<Vec<_>>();
 
     entities.into_iter().for_each(|e| {
-       println!("e = {:?}", e);
+        match e.get_kind() {
+            EntityKind::VarDecl => {
+                e.print_info();
+            },
+            EntityKind::FunctionDecl => {
+                e.print_info();
+            },
+            EntityKind::ClassDecl => {
+                e.print_info();
+            },
+            EntityKind::EnumDecl => {
+                e.print_info();
+            },
+            _ => println!("e = {:?}", e),
+        }
     });
 }
