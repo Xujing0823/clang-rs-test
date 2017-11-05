@@ -42,21 +42,5 @@ fn main() {
         }
     }).collect::<Vec<_>>();
 
-    entities.into_iter().for_each(|e| {
-        match e.get_kind() {
-            EntityKind::VarDecl => {
-                e.print_info();
-            },
-            EntityKind::FunctionDecl => {
-                e.print_info();
-            },
-            EntityKind::ClassDecl => {
-                e.print_info();
-            },
-            EntityKind::EnumDecl => {
-                e.print_info();
-            },
-            _ => println!("e = {:?}", e),
-        }
-    });
+    entities.into_iter().for_each(|e| e.print_info());
 }
