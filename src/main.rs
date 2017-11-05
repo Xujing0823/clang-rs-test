@@ -27,7 +27,13 @@ fn main() {
     let index = Index::new(&clang, false, false);
 
     // Parse a source file into a translation unit
-    let tu: TranslationUnit = index.parser(&path).parse().unwrap();
+    let tu: TranslationUnit = index.parser(&path)
+        .skip_function_bodies(true)
+        .incomplete(true)
+        .keep_going(true)
+        .single_file_parse(false)
+        .parse()
+        .unwrap();
 
     let entities: Vec<Entity> = tu.get_entity().get_children().into_iter().filter(|e: &Entity| {
         let source_file_path = e.get_location()

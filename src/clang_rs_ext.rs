@@ -28,12 +28,12 @@ impl<'tu> EntityExt for Entity<'tu> {
                      .map(|u| u as i64)
                      .unwrap_or(-1)
                  , self.get_kind()
-                 , self.get_name().unwrap_or(String::from("Unknow!!!"))
+                 , self.get_name().unwrap_or(String::from("!!!Unknow!!!"))
                  , self.get_type()
                      .map(|e| e.get_display_name())
-                     .unwrap_or(String::from("Unknow!!!"))
+                     .unwrap_or(String::from("!!!Unknow!!!"))
                  , self.get_file_path()
-                     .unwrap_or(String::from("!!Unprintable!!"))
+                     .unwrap_or(String::from("!!!Unprintable!!!"))
         );
     }
 }

@@ -5,3 +5,10 @@ authors = ["xujing <jink_xu@foxmail.com>"]
 
 [dependencies]
 clang = "0.17.0"
+
+
+[features]
+
+clang_5_0 = ["clang/clang_5_0"]
+
+default = ["clang_5_0"]
