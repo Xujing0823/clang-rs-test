@@ -28,6 +28,7 @@ fn main() {
 
     // Parse a source file into a translation unit
     let tu: TranslationUnit = index.parser(&path)
+        .arguments(&["-xc++"])
         .skip_function_bodies(true)
         .incomplete(true)
         .keep_going(true)
