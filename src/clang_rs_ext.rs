@@ -23,17 +23,38 @@ impl<'tu> EntityExt for Entity<'tu> {
             .map(|location| location.line)
     }
     fn print_info(&self) {
-        println!("[{}] kind: {:?}, id: {}, type: {}, {}"
-                 , self.get_file_line()
-                     .map(|u| u as i64)
-                     .unwrap_or(-1)
-                 , self.get_kind()
-                 , self.get_name().unwrap_or(String::from("!!!Unknow!!!"))
-                 , self.get_type()
-                     .map(|e| e.get_display_name())
-                     .unwrap_or(String::from("!!!Unknow!!!"))
-                 , self.get_file_path()
-                     .unwrap_or(String::from("!!!Unprintable!!!"))
-        );
+        match self.get_kind() {
+            EntityKind::Method => {
+                println!("[{}] kind: {:?}, id: {}::{}, type: {}, {}"
+                         , self.get_file_line()
+                             .map(|u| u as i64)
+                             .unwrap_or(-1)
+                         , self.get_kind()
+                         , self.get_semantic_parent()
+                             .and_then(|e| e.get_name())
+                             .unwrap_or(String::from(""))
+                         , self.get_name().unwrap_or(String::from("!!!Unknow!!!"))
+                         , self.get_type()
+                             .map(|e| e.get_display_name())
+                             .unwrap_or(String::from("!!!Unknow!!!"))
+                         , self.get_file_path()
+                             .unwrap_or(String::from("!!!Unprintable!!!"))
+                );
+            },
+            _ => {
+                println!("[{}] kind: {:?}, id: {}, type: {}, {}"
+                         , self.get_file_line()
+                             .map(|u| u as i64)
+                             .unwrap_or(-1)
+                         , self.get_kind()
+                         , self.get_name().unwrap_or(String::from("!!!Unknow!!!"))
+                         , self.get_type()
+                             .map(|e| e.get_display_name())
+                             .unwrap_or(String::from("!!!Unknow!!!"))
+                         , self.get_file_path()
+                             .unwrap_or(String::from("!!!Unprintable!!!"))
+                );
+            }
+        }
     }
 }

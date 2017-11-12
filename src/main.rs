@@ -28,7 +28,15 @@ fn main() {
 
     // Parse a source file into a translation unit
     let tu: TranslationUnit = index.parser(&path)
-        .arguments(&["-xc++"])
+        .arguments(&["-xc++",
+            "-std=c++11",
+            "-I/Users/xujing/Workspace/rtags/src",
+            "-I/Users/xujing/Workspace/rtags/src/rct",
+            "-I/Users/xujing/Workspace/rtags/build/src/include",
+            "-I/Users/xujing/Workspace/rtags/src/selene/include",
+            "-I/Users/xujing/Workspace/rtags/build/src/lua-prefix/src/lua-build",
+            "-I/Users/xujing/Workspace/rtags/src/lua/src",
+            "-I/usr/local/Cellar/llvm/5.0.0/include"])
         .skip_function_bodies(true)
         .incomplete(true)
         .keep_going(true)
