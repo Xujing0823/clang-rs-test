@@ -1,13 +1,16 @@
 extern crate clang;
 
 mod clang_rs_ext;
+mod duration_ext;
 
 use clang::*;
 use std::env;
 use clang_rs_ext::*;
-
+use duration_ext::*;
+use std::time;
 
 fn main() {
+    let start_time = time::Instant::now();
     let args: Vec<String> = env::args().collect();
 
     let path;
@@ -37,12 +40,18 @@ fn main() {
             "-I/Users/xujing/Workspace/rtags/build/src/lua-prefix/src/lua-build",
             "-I/Users/xujing/Workspace/rtags/src/lua/src",
             "-I/usr/local/Cellar/llvm/5.0.0/include"])
+        .cache_completion_results(false)
+        .detailed_preprocessing_record(true)
+        .briefs_in_completion_results(false)
         .skip_function_bodies(true)
         .incomplete(true)
         .keep_going(true)
         .single_file_parse(false)
         .parse()
         .unwrap();
+
+    let parse_duration = start_time.elapsed();
+    let start_filter = time::Instant::now();
 
     let entities: Vec<Entity> = tu.get_entity().get_children().into_iter().filter(|e: &Entity| {
         let source_file_path = e.get_location()
@@ -57,5 +66,16 @@ fn main() {
         }
     }).collect::<Vec<_>>();
 
+    let filter_duration = start_filter.elapsed();
+    let start_print = time::Instant::now();
+
     entities.into_iter().for_each(|e| e.print_info());
+
+    println!("");
+    println!("Parse consumed {} ms, filter consumed {} ms, print consumed {} ms"
+             , parse_duration.to_millis()
+             , filter_duration.to_millis()
+             , start_print.elapsed().to_millis());
+    println!("");
+
 }
