@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["xujing <jink_xu@foxmail.com>"]
 
 [dependencies]
-clang = "0.17.0"
+clang = "0.20.0"
 
 
 [features]
